@@ -10,15 +10,30 @@ import UIKit
 
 class DeltagerOversigtCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
-}
+  @IBOutlet weak var deltagerLabel: UILabel!
+  @IBOutlet weak var checkImageView: UIImageView!
+  
+   var showing = false
+      
+      func configureCell(email: String, isSelected: Bool) {
+          self.deltagerLabel.text = email
+          if isSelected {
+              self.checkImageView.isHidden = false
+          } else {
+              self.checkImageView.isHidden = true
+          }
+      }
+      
+      override func setSelected(_ selected: Bool, animated: Bool) {
+          super.setSelected(selected, animated: animated)
+          if selected {
+              if showing == false {
+                  checkImageView.isHidden = false
+                  showing = true
+              } else {
+                  checkImageView.isHidden = true
+                  showing = false
+              }
+          }
+      }
+  }

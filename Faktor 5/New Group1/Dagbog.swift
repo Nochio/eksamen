@@ -7,3 +7,21 @@
 //
 
 import Foundation
+
+class Dagbog {
+  private var _overskrift: String
+  private var _text: String
+  
+  var text: String {
+    return _text
+  }
+  
+  var overskrift: String {
+    return _overskrift
+  }
+  
+  init(overskrift: String, text: String) {
+    self._overskrift = overskrift
+    self._text = text
+  }
+}

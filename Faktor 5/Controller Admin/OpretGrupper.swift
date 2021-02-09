@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class SeHoldViewController: UIViewController{
+class OpretGrupper: UIViewController{
 
   @IBOutlet weak var holdNavnTextField: UITextField!
   @IBOutlet weak var ejerNavnTextField: UITextField!
@@ -43,7 +43,10 @@ class SeHoldViewController: UIViewController{
               })
           }
       }
-      
+  @IBAction func annullerBtn(_ sender: UIButton) {
+    dismiss(animated: true, completion: nil)
+  }
+  
       @IBAction func doneBtnWasPressed(_ sender: Any) {
           if holdNavnTextField.text != "" && ejerNavnTextField.text != "" {
               DataService.instance.getIds(forUsernames: chosenUserArray, handler: { (idsArray) in
@@ -64,7 +67,7 @@ class SeHoldViewController: UIViewController{
       
   }
 
-  extension SeHoldViewController: UITableViewDelegate, UITableViewDataSource {
+  extension OpretGrupper: UITableViewDelegate, UITableViewDataSource {
       func numberOfSections(in tableView: UITableView) -> Int {
           return 1
       }
@@ -101,6 +104,6 @@ class SeHoldViewController: UIViewController{
       }
   }
 
-  extension SeHoldViewController: UITextFieldDelegate {
+  extension OpretGrupper: UITextFieldDelegate {
       
   }

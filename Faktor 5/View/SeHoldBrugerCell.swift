@@ -10,15 +10,14 @@ import UIKit
 
 class SeHoldBrugerCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+  @IBOutlet weak var holdNavnLabel: UILabel!
+  @IBOutlet weak var ejerNavnLabel: UILabel!
+  @IBOutlet weak var antalMedlemmerLabel: UILabel!
+  
+  func configureCell(holdNavn: String, ejerNavn: String, antalMedlemmer: Int) {
+      self.holdNavnLabel.text = holdNavn
+      self.ejerNavnLabel.text = ejerNavn
+      self.antalMedlemmerLabel.text = "\(antalMedlemmer) medlemmer."
+  }
 
 }

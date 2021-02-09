@@ -9,22 +9,63 @@
 import UIKit
 
 class DagbogViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+  
+  @IBOutlet weak var dagbogTableView: UITableView!
+  
+  var dagbogArray = [Dagbog]()
+  
+  override func viewDidLoad() {
+      super.viewDidLoad()
     
+    dagbogTableView.delegate = self
+    dagbogTableView.dataSource = self
+    print(dagbogArray)
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    DataService.instance.REF_TEXT.observe(.value) { (snapshot) in
+      DataService.instance.getAllDagbog { (returnedTextArray) in
+        self.dagbogArray = returnedTextArray
+        self.dagbogTableView.reloadData()
+
+      }
     }
-    */
+  }
+  
+  @IBAction func tilSkrivDagbogBtn(_ sender: UIButton) {
+    performSegue(withIdentifier: "skrivdagbog", sender: nil)
+  }
+  
+}
 
+extension DagbogViewController: UITableViewDataSource, UITableViewDelegate {
+  
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return dagbogArray.count
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = dagbogTableView.dequeueReusableCell(withIdentifier: "dagbog", for: indexPath) as? DagbogOversigtCell else { return UITableViewCell() }
+    let dagbog = dagbogArray[indexPath.row]
+    cell.configureCell(overskrift: dagbog.overskrift)
+    return cell
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    guard let seDagbog = storyboard!.instantiateViewController(identifier: "sedagbog") as? SeDagbogController else { return }
+    
+    seDagbog.initData(forDagbogText: dagbogArray[indexPath.row])
+    seDagbog.modalPresentationStyle = .fullScreen
+    presentDetail(seDagbog)
+    
+    
+  }
+  
 }

@@ -1,0 +1,6 @@
+framework module Pods_Faktor_5_Faktor_5UITests {
+  umbrella header "Pods-Faktor 5-Faktor 5UITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

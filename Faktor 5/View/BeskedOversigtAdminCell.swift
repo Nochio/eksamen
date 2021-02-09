@@ -10,15 +10,10 @@ import UIKit
 
 class BeskedOversigtAdminCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    @IBOutlet weak var medlemsLabel: UILabel!
+      
+      func configureCell(medlemmer: [String]) {
+        self.medlemsLabel.text = "\(medlemmer)"
+      }
+      
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
-}

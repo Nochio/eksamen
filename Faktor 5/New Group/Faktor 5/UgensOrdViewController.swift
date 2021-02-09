@@ -7,24 +7,49 @@
 //
 
 import UIKit
+import Firebase
 
 class UgensOrdViewController: UIViewController {
 
-    override func viewDidLoad() {
+  @IBOutlet weak var ugensOrdTableView: UITableView!
+  
+  var messageArray = [Message]()
+  
+  override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    ugensOrdTableView.delegate = self
+    ugensOrdTableView.dataSource = self
+    
+      
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    DataService.instance.getAllFeedMessages { (returnedMessagesArray) in
+      self.messageArray = returnedMessagesArray.reversed()
+      self.ugensOrdTableView.reloadData()
     }
-    */
+  }
+  
+}
+
+extension UgensOrdViewController: UITableViewDelegate, UITableViewDataSource {
+  
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return messageArray.count
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "ugensord") as? UgensOrdCell else { return UITableViewCell() }
+    let message = messageArray[indexPath.row]
+    
+    cell.configureCell(content: message.content)
+    return cell
+  }
 
 }

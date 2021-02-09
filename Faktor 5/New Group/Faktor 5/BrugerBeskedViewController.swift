@@ -7,24 +7,62 @@
 //
 
 import UIKit
+import Firebase
 
-class BrugerBeskedViewController: UIViewController {
+class BrugerBeskedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    override func viewDidLoad() {
+  @IBOutlet weak var tableView: UITableView!
+  
+  var groupsArray = [ChatGruppe]()
+  
+  override func viewDidLoad() {
         super.viewDidLoad()
+    tableView.delegate = self
+    tableView.dataSource = self
 
-        // Do any additional setup after loading the view.
-    }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DismissKeyboard))
+    view.addGestureRecognizer(tap)
+    
     }
-    */
-
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    DataService.instance.REF_CHAT.observe(.value) { (snapshot) in
+      DataService.instance.getAllChatGroups { (returnedChatGroupsArray) in
+        self.groupsArray = returnedChatGroupsArray
+        self.tableView.reloadData()
+      }
+    }
+  }
+  
+  @objc func DismissKeyboard() {
+    view.endEditing(true)
+  }
+  
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return groupsArray.count
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "beskedOversigtsCell", for: indexPath) as? BeskedOversigtsBrugerCell else { return UITableViewCell()}
+    
+    let gruppe = groupsArray[indexPath.row]
+    cell.configureCell(medlemmer: gruppe.medlemmer)
+    
+    return cell
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    guard let seChatGruppe = storyboard?.instantiateViewController(identifier: "seChatRumBruger") as? ChatBrugerController else { return }
+    
+    seChatGruppe.initData(forGroup: groupsArray[indexPath.row])
+    seChatGruppe.modalPresentationStyle = .fullScreen
+    presentDetail(seChatGruppe)
+  }
+  
 }

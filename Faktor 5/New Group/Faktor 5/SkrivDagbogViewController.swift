@@ -10,21 +10,33 @@ import UIKit
 
 class SkrivDagbogViewController: UIViewController {
 
-    override func viewDidLoad() {
+  @IBOutlet weak var overskriftTextField: UITextField!
+  @IBOutlet weak var dagbogTextField: UITextView!
+  
+  override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DismissKeyboard))
+        view.addGestureRecognizer(tap)
+
     }
+
+    @objc func DismissKeyboard() {
+      view.endEditing(true)
+    }
+  
+  
     
 
-    /*
-    // MARK: - Navigation
+  @IBAction func gemBtn(_ sender: UIButton) {
+    
+    DataService.instance.uploadDagbog(withHeadline: overskriftTextField.text!, withText: dagbogTextField.text!, withDagbogKey: nil, sendComplete: { (isComplete) in
+        self.dismiss(animated: true, completion: nil)
+    })
+    
+  }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+  @IBAction func tilbageBtn(_ sender: UIButton) {
+    dismiss(animated: true, completion: nil)
+  }
 }

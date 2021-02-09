@@ -7,24 +7,46 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginViewController: UIViewController {
 
-    override func viewDidLoad() {
+  @IBOutlet weak var emailTextField: UITextField!
+  @IBOutlet weak var passwordTextField: UITextField!
+  
+  override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
     
+    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DismissKeyboard))
+    view.addGestureRecognizer(tap)
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+  }
+  
+  @objc func DismissKeyboard() {
+    
+    view.endEditing(true)
+  }
+  
+  @IBAction func loginBtnPressed(_ sender: UIButton) {
+    if let email = emailTextField.text, let password = passwordTextField.text {
+      if email == "rh@faktor5.dk" || email == "lasse@faktor5.dk"{
+        AuthService.instance.loginUser(withEmail: emailTextField.text!, andPassword: passwordTextField.text!, loginComplete: { (success, loginError) in
+            if success {
+                self.dismiss(animated: true, completion: nil)
+              self.performSegue(withIdentifier: "toAdminVC", sender: self)
+            } else {
+                print(String(describing: loginError?.localizedDescription))
+            }
+        })
+      } else {
+          Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            if let e = error {
+              print(e)
+            } else {
+              self.performSegue(withIdentifier: "toUserVC", sender: self)
+            }
+          }
+      }
     }
-    */
-
+  }
 }

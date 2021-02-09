@@ -10,21 +10,36 @@ import UIKit
 
 class SeDagbogController: UIViewController {
 
-    override func viewDidLoad() {
+  @IBOutlet weak var textLabel: UITextView!
+  @IBOutlet weak var overskriftLabel: UITextField!
+  
+  var texts: Dagbog?
+  var dagbogArray = [Dagbog]()
+  
+  func initData(forDagbogText dagbogText: Dagbog) {
+    self.texts = dagbogText
+  }
+  
+  override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
     
+    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DismissKeyboard))
+        view.addGestureRecognizer(tap)
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
 
+    @objc func DismissKeyboard() {
+      view.endEditing(true)
+    }
+  override func viewWillAppear(_ animated: Bool) {
+    DataService.instance.getAllDagbog { (returnedDagbog) in
+      self.dagbogArray = returnedDagbog
+      self.overskriftLabel.text = self.texts?.overskrift
+      self.textLabel.text = self.texts?.text
+    }
+  }
+
+  @IBAction func tilbageBtn(_ sender: UIButton) {
+    dismiss(animated: true, completion: nil)
+  }
 }

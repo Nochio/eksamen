@@ -10,15 +10,12 @@ import UIKit
 
 class BrugerGruppeCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+  @IBOutlet weak var brugerTextLabel: UILabel!
+  @IBOutlet weak var beskedTextLabel: UILabel!
+  
+  func configureCell(email: String, content: String) {
+    self.brugerTextLabel.text = email
+    self.beskedTextLabel.text = content
+  }
 
 }
