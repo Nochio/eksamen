@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>609929453658-c6gb0rpt2mhpf6gb0c1u32avt6ebgkkh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.609929453658-c6gb0rpt2mhpf6gb0c1u32avt6ebgkkh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD1EfZksrnoFdiuJNBW-RDJ-Y5GGY04aIg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>609929453658</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>TH.Faktor-5</string>
+	<key>PROJECT_ID</key>
+	<string>enprocenternok</string>
+	<key>STORAGE_BUCKET</key>
+	<string>enprocenternok.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:609929453658:ios:7a31e4857e323bcfcdb863</string>
+	<key>DATABASE_URL</key>
+	<string>https://enprocenternok.firebaseio.com</string>
+</dict>
+</plist>
